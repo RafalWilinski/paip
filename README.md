@@ -4,6 +4,14 @@
 
 ![paip](./assets/why.png)
 
+```bash
+# Instead of
+pip install -r requirements.txt
+
+# Do this 
+paip install -r requirements.txt
+```
+
 ## Installation
 
 `paip` is distributed as a single executable file.

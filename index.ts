@@ -14,6 +14,10 @@ Here is the output from the pip command:
 {{PIP_OUTPUT}}
 </pip_output>
 
+Additional context:
+Current directory: {{CURRENT_DIR}}
+Username: {{USERNAME}}
+
 Carefully analyze the provided pip output. Look for error messages, warnings, or any indications of issues that prevented successful installation. Pay attention to:
 
 1. Package name and version
@@ -44,12 +48,18 @@ Write the exact command the user should run next, including any necessary flags 
 </command>
 </recommendation>
 
-Ensure that your explanation is clear and concise, and that the recommended command is accurate and appropriate for addressing the specific issue identified in the pip output.`
+Ensure that your explanation is clear and concise, and that the recommended command is accurate and appropriate for addressing the specific issue identified in the pip output. Consider the current directory and username when formulating your recommendation if relevant.`
 
 async function getLLMSuggestion(error: string): Promise<Recommendation> {
+  const currentDir = process.cwd();
+  const username = process.env.USER || process.env.USERNAME || 'unknown';
+
   const { text } = await generateText({
     model: ANTHROPIC_API_KEY ? anthropic("claude-3-5-sonnet-20240620") : openai("gpt-4o-mini"),
-    prompt: prompt.replace("{{PIP_OUTPUT}}", error),
+    prompt: prompt
+      .replace("{{PIP_OUTPUT}}", error)
+      .replace("{{CURRENT_DIR}}", currentDir)
+      .replace("{{USERNAME}}", username),
   })
 
   return parseRecommendation(text)!;
