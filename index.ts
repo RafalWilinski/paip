@@ -116,7 +116,7 @@ async function smartPipInstall(args: string[]) {
 if (import.meta.main) {
   const args = Bun.argv.slice(2);
   if (args.length === 0) {
-    console.log("Usage: piiiiiip3 install [pip install arguments]");
+    console.log("Usage: paip (install) [pip3 install arguments]");
     process.exit(1);
   }
 

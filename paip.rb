@@ -1,7 +1,7 @@
 class Paip < Formula
   desc "A CLI that uses an AI to retry failed pip commands based on the output"
   homepage "https://rwilinski.ai"
-  version "0.0.1"
+  version "0.0.2"
 
   if Hardware::CPU.arm?
     url "https://github.com/RafalWilinski/paip/releases/download/v0.0.1/paip-macos-arm64"

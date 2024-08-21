@@ -13,7 +13,7 @@
 Using Homebrew:
 
 ```bash
-brew tap RafalWilinski/paip
+brew tap RafalWilinski/paip https://github.com/RafalWilinski/paip.git
 brew install paip
 ```
 
@@ -37,3 +37,7 @@ To compile `paip` to a single executable file:
 
 ```bash
 bun build --compile --minify index.ts --outfile paip
+
+---
+
+This project has been build in Cursor in ~30 minutes. Don't take it too seriously.
