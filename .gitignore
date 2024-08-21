@@ -10,6 +10,11 @@ yarn-error.log*
 lerna-debug.log*
 .pnpm-debug.log*
 
+paip-linux-arm64
+paip-linux-x64
+paip-macos-arm64
+paip-macos-x64
+
 # Caches
 
 .cache

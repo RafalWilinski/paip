@@ -13,5 +13,13 @@
     "@ai-sdk/anthropic": "^0.0.46",
     "@ai-sdk/openai": "^0.0.51",
     "ai": "^3.3.14"
+  },
+  "scripts": {
+    "build": "bun build --compile --minify index.ts --outfile paip",
+    "build:macos:x64": "bun build --compile --minify index.ts --outfile paip-macos-x64 --target=bun-darwin-x64",
+    "build:macos:arm64": "bun build --compile --minify index.ts --outfile paip-macos-arm64 --target=bun-darwin-arm64",
+    "build:linux:x64": "bun build --compile --minify index.ts --outfile paip-linux-x64 --target=bun-linux-x64",
+    "build:linux:arm64": "bun build --compile --minify index.ts --outfile paip-linux-arm64 --target=bun-linux-arm64",
+    "build:all": "bun build:macos:x64 && bun build:macos:arm64 && bun build:linux:x64 && bun build:linux:arm64"
   }
 }
