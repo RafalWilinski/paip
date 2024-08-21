@@ -1,12 +1,8 @@
 # paip
 
+> A CLI that uses an AI to retry failed pip commands based on the output.
+
 ![paip](./assets/why.png)
-
-Why?
-> Because Pythons ecosystem sucks.
-
-What?
-> A CLI that uses an LLM to retry failed pip commands based on the output.
 
 ## Installation
 
