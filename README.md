@@ -9,8 +9,12 @@
 `paip` is distributed as a single executable file.
 
 ### MacOS
-```bash
 
+Using Homebrew:
+
+```bash
+brew tap RafalWilinski/paip
+brew install paip
 ```
 
 ## Development
@@ -33,4 +37,3 @@ To compile `paip` to a single executable file:
 
 ```bash
 bun build --compile --minify index.ts --outfile paip
-```
