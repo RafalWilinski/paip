@@ -1,0 +1,17 @@
+{
+  "name": "llm-pip",
+  "module": "index.ts",
+  "type": "module",
+  "homepage": "https://rwilinski.ai",
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "@ai-sdk/anthropic": "^0.0.46",
+    "@ai-sdk/openai": "^0.0.51",
+    "ai": "^3.3.14"
+  }
+}
