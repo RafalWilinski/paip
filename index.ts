@@ -1,7 +1,7 @@
-import { $, file, ShellError, type Shell } from "bun";
-import { generateText } from "ai"
-import { openai } from "@ai-sdk/openai"
-import { anthropic } from "@ai-sdk/anthropic"
+import { anthropic } from "@ai-sdk/anthropic";
+import { openai } from "@ai-sdk/openai";
+import { generateText } from "ai";
+import { $, ShellError } from "bun";
 
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY;
@@ -48,19 +48,21 @@ Write the exact command the user should run next, including any necessary flags 
 </command>
 </recommendation>
 
-Ensure that your explanation is clear and concise, and that the recommended command is accurate and appropriate for addressing the specific issue identified in the pip output. Consider the current directory and username when formulating your recommendation if relevant.`
+Ensure that your explanation is clear and concise, and that the recommended command is accurate and appropriate for addressing the specific issue identified in the pip output. Consider the current directory and username when formulating your recommendation if relevant.`;
 
 async function getLLMSuggestion(error: string): Promise<Recommendation> {
   const currentDir = process.cwd();
-  const username = process.env.USER || process.env.USERNAME || 'unknown';
+  const username = process.env.USER || process.env.USERNAME || "unknown";
 
   const { text } = await generateText({
-    model: ANTHROPIC_API_KEY ? anthropic("claude-3-5-sonnet-20240620") : openai("gpt-4o-mini"),
+    model: ANTHROPIC_API_KEY
+      ? anthropic("claude-3-5-sonnet-20240620")
+      : openai("gpt-4o-mini"),
     prompt: prompt
       .replace("{{PIP_OUTPUT}}", error)
       .replace("{{CURRENT_DIR}}", currentDir)
       .replace("{{USERNAME}}", username),
-  })
+  });
 
   return parseRecommendation(text)!;
 }
@@ -71,7 +73,9 @@ interface Recommendation {
 }
 
 function parseRecommendation(output: string): Recommendation | null {
-  const recommendationMatch = output.match(/<recommendation>([\s\S]*?)<\/recommendation>/);
+  const recommendationMatch = output.match(
+    /<recommendation>([\s\S]*?)<\/recommendation>/,
+  );
 
   if (!recommendationMatch) {
     return null;
@@ -79,8 +83,12 @@ function parseRecommendation(output: string): Recommendation | null {
 
   const recommendationContent = recommendationMatch[1];
 
-  const explanationMatch = recommendationContent.match(/<explanation>([\s\S]*?)<\/explanation>/);
-  const commandMatch = recommendationContent.match(/<command>([\s\S]*?)<\/command>/);
+  const explanationMatch = recommendationContent.match(
+    /<explanation>([\s\S]*?)<\/explanation>/,
+  );
+  const commandMatch = recommendationContent.match(
+    /<command>([\s\S]*?)<\/command>/,
+  );
 
   if (!explanationMatch || !commandMatch) {
     return null;
@@ -88,15 +96,21 @@ function parseRecommendation(output: string): Recommendation | null {
 
   return {
     explanation: explanationMatch[1].trim(),
-    command: commandMatch[1].trim()
+    command: commandMatch[1].trim(),
   };
 }
 
 async function smartPipInstall(args: string[]) {
-  let command = ['pip3', 'install', ...(args[0] === 'install' ? args.slice(1) : args)];
+  let command = [
+    "pip3",
+    "install",
+    ...(args[0] === "install" ? args.slice(1) : args),
+  ];
 
   if (!OPENAI_API_KEY && !ANTHROPIC_API_KEY) {
-    console.error("Neither OPENAI_API_KEY nor ANTHROPIC_API_KEY is set. Please set one of them.");
+    console.error(
+      "Neither OPENAI_API_KEY nor ANTHROPIC_API_KEY is set. Please set one of them.",
+    );
     process.exit(1);
   }
 
@@ -109,9 +123,12 @@ async function smartPipInstall(args: string[]) {
     } catch (err) {
       if (err instanceof Error) {
         console.error(`Error occurred: ${(err as ShellError).stderr}`);
-        const suggestion = await getLLMSuggestion(`${err.message}\n\n${(err as ShellError).stderr}`);
-        console.log('LLM Explanation: ', suggestion.explanation);
-        console.log('-----------------------------------');
+
+        const suggestion = await getLLMSuggestion(
+          `${err.message}\n\n${(err as ShellError).stderr}`,
+        );
+        console.log("LLM Explanation: ", suggestion.explanation);
+        console.log("-----------------------------------");
         console.log(`LLM suggestion: ${suggestion.command}`);
 
         command = suggestion.command.split(/\s+/);

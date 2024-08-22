@@ -5,10 +5,10 @@ class Paip < Formula
 
   if Hardware::CPU.arm?
     url "https://github.com/RafalWilinski/paip/releases/download/v0.0.1/paip-macos-arm64"
-    sha256 "a17e0d756765cfdc354f5fc4708c0c4e3e10ddb67c39bb1eecb7f9024535b1d4" 
+    sha256 "953da836c8e9c05e1923828f029c5d0c3bb01f0430384d64fdb8b2f8f040a9b2"
   else
     url "https://github.com/RafalWilinski/paip/releases/download/v0.0.1/paip-macos-x64"
-    sha256 "8969c09983b68aac93fc50a8adbfe81f15dc19f4be87dee53176a431a7243549"
+    sha256 "c9afe24f5dcebb6a1ccf6fd8cb80cb09eb97c56353b99e817c327c9ad4b1565f"
   end
 
   def install
